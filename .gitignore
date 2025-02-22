@@ -1,5 +1,4 @@
 # Ignorer l'environnement virtuel
-venv/
 ftline/
 
 # Ignorer les fichiers de cache Python
