@@ -9,15 +9,15 @@ from src.prediction import predict_price  # ✅ Peut maintenant être importé d
 from src.gui import show_gui  # ✅ Import propre et structuré
 
 def main():
-    print("📌 Bienvenue dans le modèle de prédiction de prix de voiture !")
+    print("Bienvenue dans le modèle de prédiction de prix de voiture !")
     print("🔄 Le modèle va être entraîné...")
 
     # Entraîner le modèle
     train_model()
-    print("✅ Modèle entraîné avec succès !")
+    print("Modèle entraîné avec succès !")
 
     # Lancer l'interface graphique après l'entraînement
-    print("🖥️ Lancement de l'interface graphique...")
+    print("Lancement de l'interface graphique...")
     show_gui(predict_price)
 
 if __name__ == "__main__":

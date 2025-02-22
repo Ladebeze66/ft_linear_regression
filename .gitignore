@@ -31,3 +31,7 @@ Thumbs.db
 *.tar.gz
 dist/
 build/
+
+# Ignorer les fichiers générés
+model.npy
+data/data.normalized.csv

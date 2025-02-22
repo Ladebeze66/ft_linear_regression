@@ -548,6 +548,40 @@ Implémentation de la fonction coût
                 tmpθ₁ = learningRate × (1 / m) ∑ᵐ⁻¹ᵢ=₀ (estimatePrice(mileage[i]) − price[i]) x mileage[i]
                     En mathématique ces valeurs temporaires sont sous forme de dérivées
 
+- Calcul de l'évaluation du modèle
+ . Calcul de deux métriques de performance:
+    1. L'erreur quadratique moyenne (MSE - Mean Squared Error)
+    2. Le coefficient de détermination (R² _ R square score)
+    Ces deux valeurs évaluent à quel point notre modèle de régression linéaire est précision
+
+    1. Erruer quadratique Moyenne (MSE)
+        Formule:
+            MSE = (1/m)∑ᵐᵢ=1(yi - ^yi)²
+                . yi = valeur réelle du prix normalisé
+                . ^yi = Valeur prédite par notre modèle
+                . m = Nombre total de points de données
+
+                interprétation:
+                    . MSE proche de 0 fait très peu d'erreur
+                    . MSE élevé -> Le modèle prédit mal le prix
+                mse = np.mean((y - y_pred) ** 2)
+
+    2. Coefficient de détermination (R² Score)
+        Formule:
+            R² = 1 - (SSrsesidual / SStotal)
+        Avec:
+            . SStotal = Somme des carrés des différences entre les valeurs réelles et leur moyenne
+                SStotal = ∑(yi - -y)²
+                où -y est la moyenne de toutes les valeurs réelle
+            . SSresidual = Somme des carrés des erreurs entre les valeurs réelles et les perédictions
+                SSresidual = ∑(yi - ^yi)²
+            
+            interprétation de R²:
+             . R² = 1 -> Le modèle est parfait et explique 100% des variations de price_norm.
+             . R² = 0 -> Le modèle est inutile et ne fait pas mieux qu'une poyenne
+             . R² < 0 -> Le modèle est pire que de deviner la moyenne (cata!)
+
+
 
 
 
