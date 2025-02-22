@@ -1,0 +1,34 @@
+# Ignorer l'environnement virtuel
+venv/
+.ftline/
+
+# Ignorer les fichiers de cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignorer les fichiers de logs et temporaires
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Ignorer les fichiers générés par VS Code
+.vscode/
+*.code-workspace
+
+# Ignorer les fichiers de dépendances (pip, poetry)
+Pipfile
+Pipfile.lock
+poetry.lock
+
+# Ignorer les fichiers système (Mac & Windows)
+.DS_Store
+Thumbs.db
+
+# Ignorer les archives et builds
+*.zip
+*.tar.gz
+dist/
+build/

@@ -1,0 +1,554 @@
+ft_linear_regression
+
+Introduction machine learning
+
+Objectifs
+-Introductuction aux concepts fondamentaux du machine learning.
+-Créer un programme capable de prédire le prix d'une voiture en utilisant une fonction linéaire entraînée avec un algorithme de descente de gradient.
+-Cet algorithme réutilisable sur n'importe quel jeu de données.
+
+Instructions générales
+-liberté de choisir le langage de programmation(j'ai choisi python)
+-Vous pouvez utiliser n'importe quelle bibliothèque, tant qu'elle ne fait pas tout le travail pour nous (ex: numphy.polyfit en python).
+-Conseillé d'utiliser un langage qui permet de visualiser facilement vos données (déboggage plus simple).
+
+Partie obligatoire
+
+Implémentation d'une régression linéaire simple avec une seule variable: le kilométrage de la voiture.
+Création de deux programmes:
+
+1. Programme de prédiction:
+-Permet de prédire le prix d'une voiture en fonction de son kilométrage.
+-Une fois lancé, il demande à l'utilisateur un kilométrage et affiche ensuite le prix estimé.
+-Il utilise l'hypothèse suivante pour estimer le prix:
+    estimatePrice(mileage) = (0₀ + 0₁ x mileage)
+-Avant l'entraînement, 0₀ et 0₁ sont initialisés à 0.
+
+2.Programme d'entraînement:
+-Il lit un fichier contenant un jeu de données et effectue une régression linéaire sur ces données.
+-Une fois la régression terminée, il sauvegarde les valeurs optimales de 0₀ et 0₁ pour être utilisées par le programme de prédiction.
+
+algorithme de descente de gradient
+Vous utiliserez les formules suivantes:
+    tmpθ₀ = learningRate × (1 / m) ∑ᵐ⁻¹ᵢ=₀ (estimatePrice(mileage[i]) − price[i])
+tmpθ₁ = learningRate × (1 / m) ∑ᵐ⁻¹ᵢ=₀ (estimatePrice(mileage[i]) − price[i]) x mileage[i]
+Que signifie tmpθ₀ et tmpθ₁?
+Dans la mise à jour des paramètres, on utilise des variables temporaires tmpθ₀ et tmpθ₁ avant d'affecter les nouvelles valeurs à θ₀ et θ₁.
+Pourquoi utiliser ces variables temporaires?
+    . On met à jour θ₀ et θ₁ en même temps.
+    . Si on modifie directement θ₀ avant de calculer θ₁, l'un des paramètressera basé sur une valeur déjà modifiée et faussera l'apprentissage.
+    . Solution: On stocke les nouvelles valeurs dans tmp\( \theta_0) et tmp\( \theta_1), puis on les applique après tous les calculs.
+Méthode correcte:
+1. Calculer les nouvelles valeurs de θ₀ et θ₁ et les stocker dans des variables temporaires.
+2. Appliquer les nouvelles valeurs à θ₀ et θ₁.
+Exemple de pseudo-code:
+tmp_theta0 = theta0 - learning_rate * gradient0
+tmp_theta1 = theta1 - learning_rate * gradient1
+
+# Mise à jour finale
+theta0 = tmp_theta0
+theta1 = tmp_theta1
+Ainsi θ₀ et θ₁ sont mis à jour en même temps et l'algorithme reste stable.
+
+Remarque:
+. m représente le nombre total de données d'entraînement.
+. La fonction estimatePrice est la même que celle du programme de prédiction, mais ici, elle utilise les valeurs temporaires de 0₀ et 0₁.
+. Mise à jour simultanée: assurez-vous de mettre à jour 0₀ et 0₁ en même temps.
+
+Partie Bonus
+Voici quelques fonctionnalités bonus qui pourraient être très utiles:
+. Tracer un graphe des données pour visualiser leur répartition.
+. Afficher la droite de régression obtenue sur le même graphe pour voir le résultat de l'algorithme.
+. Créer un programme mesurant la précision de l'algorithme.
+
+Recherches sur le sujet
+
+Pourquoi la régression linéaire?
+La régression linéaire est l'un des modèles les plus simples en Machine Learning, souvent utilisé comme première approche aveant d'explorer des modèles plus complexes.
+Nous devons construire un programme capable de prédire le prix d'une voiture en fonction de son kilométrage.
+La régression linéaire fonctionne bien ici:
+. Relation linéaire: Plus le kilométrage est élevé, plus le prix diminue.
+. Facilité d'interprétation: La droite de régression permet d'observer directement l'effet du kilométrage sur le prix.
+
+Objectifs du projet
+1.Créer un programme qui prédit le prix d'une voiture en fonction de son kilométrage.
+2.utiliser une régression linéaire simple, entraînée avec un algorithme de descente de gradient.
+3.Evaluer le modèle et comprendre comment ajuster les paramètres pour minimiser l'erreur.
+A la fin du projet, tu seras capable d'appliquer la régression linéaire sur d'autres datasets et d'utiliser la descente de gradient.
+
+Explications
+
+Mileage (kilométrage)
+C'est la distance totale parcourue par une voiture depuis sa fabrication.
+-Unité courante: En km ou miles
+-Impact sur le prix:
+. plus le kilométrage est élevé, plus la voiture est usée -> prix plus faible.
+. une voiture avec peu de kilomètres est plus chère.
+
+Régression linéaire: Modèle Mathématique
+La régression linéaire simple est une modélisation mathématique de la relation entre deux variables:
+. une variable indépendante (X) -> Le kilométrage
+. Une variante dépendante (Y) -> Le prix de la voiture
+On cherche à modéliser cette relation sous la forme d'une droite:
+    estimatePrice(mileage) = (0₀ + 0₁ x mileage)
+Signification des parmètres:
+. 0₀(Intercept): prix de départ lorsque le kilométrage est 0.
+. 0₁(Pente): Variation du prix pour une unité de kilométrage supplémentaire.
+Objectif de l'apprentissage: Trouver les meilleurs 0₀ et 0₁ qui minimisent l'erreur entre les prix réels et les prix prédits.
+
+Explication des notations avec la somme ∑ (sigma)
+Le symbole ∑ représente une somme d'éléments successifs, généralement sous la forme:
+b
+∑f(i)
+i=a
+Interprétation:
+. i est l'indice d'itération.
+. a est la valeur de départ(souvent 0 dans notre cas).
+. b est la valeur de fin(souvent m-1, où m est le nombre total d'exemples)
+. f(i) est l'expression mathématique à sommer.
+exemple simple:
+4
+∑i = 0 + 1 + 2 + 3 + 4 = 10
+i=0
+Dans notre contexte:
+m-1
+∑f(i) 
+i=0
+signifie que nous additionnons tous les éléments de la liste du premier (index 0) au dernier (index m-1).
+Exemple appliqué aux voitures, si nous avons 5 voitures:
+4
+∑mileage[i]
+i=0
+signifie ajouter tous les kilom ètres de ces 5 voitures.
+
+Explication de:
+∑ᵐ⁻¹ᵢ=₀ (estimatePrice(mileage[i]) − price[i])
+1. estimatePrice(mileage[i])
+    . C'est la prédictionde notre modèle pour la voiture i.
+    .Calculée par:
+        estimatePrice(mileage[i]) = 0₀ + 0₁ x mileage[i]
+2. price[i]
+    . C'est le prix réel de la voiture i dans notre dataset.
+3. estimatePrice(mileage[i]) - price[i]
+    . C'est l'erreur de prédiction pour la voiture i.
+    . Si l'erreur est positive, cela signifie que notre modèle surrestime le prix de la voiture.
+    . Si l'erreur est négative, cel signifie que notre modèle sosu-estime le prix.
+4. ∑ᵐ⁻¹ᵢ=₀
+    . on additionne ces erreurs pour toutes les voitures du dataset.
+Que représente cette somme?
+    . Elle mesure l'erreur globale du modèle.
+    . Si cette somme est grande, cela signifie que notre modèle a encore beaucoup d'erreurs.
+    . L'objecif de la descente de gradient est de réduire cette somme progressivement.
+
+Descente de gradient: optimisation des paramètres 0₀ et 0₁
+
+tmpθ₀ = learningRate × (1 / m) ∑ᵐ⁻¹ᵢ=₀ (estimatePrice(mileage[i]) − price[i])
+tmpθ₁ = learningRate × (1 / m) ∑ᵐ⁻¹ᵢ=₀ (estimatePrice(mileage[i]) − price[i]) x mileage[i]
+mileage[i] : kilométrage de la voiture i
+price[i] : Prix réel de la voiture i(valeur du marché)
+m : nombre total de voitures dans le dataset
+estimatePrice(mileage[i]) : prix estimé par notre modèle pour une voiture de kilométrage mileage[i]
+learningRate : Taux d'apprentissage, un petit pas qui contrôle la vitesse de l'apprentissage (vitesse à laquelle on ajuste nos estimations)
+0₀ : Intercept(point où la droite coupe l'axe des prix) prix de base d'une voiture (sans tenir compte du kilométrage)
+0₁ : Pente de la droite, Impact du kilométrage sur le prix (ex: combien d'euros perdus tous les 1 000 km)
+Problème réel: le vendeur veut fixer des prix optimaux sans sous-évaluer ni surévaluer les voitures. Il a un historique des ventes, et il veut l'utiliser pour ajuster ses prix en fonction du marché.
+
+Mises à jour 0₀ et 0₁
+
+Ajustement du prix de base de 0₀
+
+    0₀ = 0₀ - learningRate x (1/m)∑ᵐ⁻¹ᵢ=₀ (estimatePrice(mileage[i]) − price[i])
+Qu'est-ce que le Learning Rate?
+Le learning rate(ɑ) est le facteur d'ajustement qui contrôle la vitesse à laquelle nous mettons à jour 0₀ et 0₁.
+Exemple avec une voiture:
+    . Imaginons que nous voulons notre prix en fonction des ventes passées.
+    . Si nous réajustons le prix trop brutalement, nous risquons de rendre le prix instable. Si ɑ trop petit (0.0001) apprentissage trop lent trop d'itérations pour atteindre une bonne estimation
+    . Si nous ajustons le prix trop doucement, nous allons mettre trop de temps à trouver un prix optimal. Si ɑ trop grand (1) L'agorithme oscille, le modèle devient instable et ne trouve jamais de solution optimales
+    . Un réglage correct oscillerait (0.01 - 0.1) Apprentissage progressif et efficace converge vers une bonne estimation
+ 
+1. (1/m)∑ᵐ⁻¹ᵢ=₀ (estimatePrice(mileage[i]) − price[i])
+    . C'est la moyenne des erreurs de prédiction sur toutes les voitures.
+    . Si elle est positive, notre modèle surrestime les prix et doit baisser 0₀.
+    . Si elle est négative, notre modèle sous-estime les prix et doit augmenter 0₀.
+
+2. ɑ(learning rate)
+    . Contrôle de la vitesse de la mise à jour de 0₀.
+
+3. -ɑ x (1/m)∑
+    . On soustrait cette valeur à 0₀ pour minimiser l'erreur globale.
+
+Idée clé:
+0₀ est mis à jour pour compenser la tendance générale du modèle à surrestimer ou sous-estimer les prix.
+
+Ajustement de la Pente: Variation du prix pour une unité de kilométrage supplémentaire 0₁
+    tmpθ₁ = learningRate × (1 / m) ∑ᵐ⁻¹ᵢ=₀ (estimatePrice(mileage[i]) − price[i]) x mileage[i]
+    θ₁ = 0₁ - ɑ × (1 / m) ∑ᵐ⁻¹ᵢ=₀ (estimatePrice(mileage[i]) − price[i]) x mileage[i]
+
+1. (estimatePrice(mileage[i]) − price[i]) x mileage[i]
+    . Multiplie l'erreur de prédiction par le kilométrage correspondant.
+    . Cela signifie que les voitures avec un kilométrage plus élevé influencent plus la mise à jour de 0₁.
+
+2. Interprétation:
+    . Si les erreurs sont grandes sur les voitures à haut kilométrage, il faut modifier 0₁ de façon plus importantes.
+    . Si les erreurs sont plus petites sur ces voitures 0₁ est peu modifié.
+
+3. Pourquoi cette multiplication?
+    . Si on a une erreur positive et un grans kilométrage -> Le modèle surestime trop les prix des voitures à fort kilométrage -> il faut diminuer 0₁ pour réduire la pente.
+    . SI on a une erreur négative et un grand kilométrage -> Le modèle sosu-estime trop le prix des voitures à fort kilométrage -> il faut augmenter 0₁ pour mieux suivre la tendance.
+
+Idée clé:
+0₁ est mis à jour pour mieux représenter l'impact du kilométrage sur les prix.
+
+Différentes Bibliothèque nécessaires pour la réalisation du projet
+
+1. Manipulatiuon et chargement des données
+    Objectif: lire, triater et manipuler le fichier CSV contenant les données.
+    import pandas as pd # Chargement et manipulation des données, facilite la lecture et l'exploration des données (tableau sous forme de DataFrame)
+    import numpy as np # alculs et numériques et manipulation des tableaux, manipulation efficace des matrices et vecteurs (utile pour la descente de gradient)
+
+2. Visualisation des données
+    Objectif: Afficher des graphiques permettant de comprendre la realtion entre kilométrage et prix.
+    import matplotlib.pyplot as plt # Tracer des graphiques, permet de tracer les graphiques de base (histogrammes, courbes, nuages de points).
+    import seaborn as sns # Visualisation avancée et graphiques stylisés, ajoute du style et permet une visualisation plus claire et plus interactive.
+
+3. Implémentation de la régression linéaire
+    Objectif: Coder l'algorithme de descente de gradient pour entraîner notre modèle.
+    import time # Pour mesurer le temps d'éxécution, permet de mesurer la rapidité de convergence du modèle
+
+4. Interface graphiques
+    Objectif: Permettre une interaction utilisateur intuitive (entrée kilométrage, affichage du prix estimé).
+    import tkinter as tk # Création d'une interface graphiques
+    from tkinter import ttk, messagebox #widgets avancés et messages d'erreur
+    Pourquoi tkinter?
+        . léger et natif sur Python (aucune installation supplémentaire).
+        . Facile à intégrer avec des boutons, chamsp de saisie et affichage des résultats.
+
+5. Evaluation du modèle
+    Objectif: Calculer les performances du modèle (erreurs, précision).
+    from sklearn.metrics import mean_squared_error, r2_score
+    . mean_squared_error: Permet de mesurer l'erreur du modèle après l'entraînement.
+    . r2_score: Indique la qualité d'ajustemnt du modèle (score entre 0 et 1).
+
+
+Tips python:
+
+Python propose plusieurs moyens d'obtenir de l'aide sur une fonction, un module ou un objet. Voici les principales méthodes pour accéder à la documentation et obtenir des explications sur ce que tu cherches.
+
+1️. Utiliser help()
+    La fonction help() est intégrée à Python et permet d'afficher la documentation d'un objet ou d'un module.
+    - Exemple avec une fonction :
+        help(print)
+        Affiche la documentation de la fonction print().
+    - Exemple avec un module :
+        import pandas as pd
+        help(pd)
+        Affiche la documentation du module pandas.
+    - Exemple avec une méthode spécifique :
+        import pandas as pd
+        help(pd.DataFrame.head)
+        Affiche l'aide sur head() de DataFrame.
+    . Sortir du mode interactif de help()
+        Lorsque help() affiche beaucoup d'informations, tu peux quitter l'affichage en tapant q et en appuyant sur Entrée.
+
+2️. Utiliser dir()
+    La fonction dir() liste les attributs et méthodes disponibles pour un objet.
+        - Exemple avec une liste :
+            dir(list)
+            Retourne toutes les méthodes disponibles pour une liste.
+        - Exemple avec un module :
+            import pandas as pd
+            dir(pd)
+            Liste toutes les fonctions et classes disponibles dans le module pandas.
+
+3️. Utiliser __doc__
+    Chaque fonction ou module possède un attribut spécial __doc__ contenant sa documentation.
+        - Exemple avec print :
+            print(print.__doc__)
+        - Exemple avec pandas.DataFrame.head :
+            import pandas as pd
+            print(pd.DataFrame.head.__doc__)
+            Cela affiche une description détaillée de head().
+
+4️. Utiliser ? et ?? (dans Jupyter Notebook ou IPython)
+    Si tu utilises Jupyter Notebook ou IPython, tu peux utiliser :
+        - ? pour afficher une courte documentation.
+            ?? pour afficher la documentation complète (y compris le code source si disponible).
+        - Exemple :
+            print?
+            Affiche l'aide sur print().
+            pd.DataFrame.head??
+            Affiche la documentation et le code source de head().
+
+5️. Lire la documentation officielle
+    Si tu veux une source fiable et détaillée, voici quelques liens utiles :
+
+    Documentation officielle de Python : https://docs.python.org/fr/3/
+    Documentation de Pandas : https://pandas.pydata.org/docs/
+    Documentation de Matplotlib : https://matplotlib.org/stable/contents.html
+
+Mise en place du programme
+
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0 dans le terminal WSL avant execution du script
+
+- csv_analyse.py
+    . Fichier permettant l'analyse du fichier csv*
+    
+    . print(f"Nombre total de véhicules dans le dataset : {df.shape[0]}") 
+        permet d'afficher dans la console le nombre total de lignes dans le dataset, qui représente ici le nombre total de véhicules.
+        Explication :
+        df.shape renvoie un tuple (n_lignes, n_colonnes), où :
+        df.shape[0] correspond au nombre de lignes (c'est-à-dire le nombre d'entrées dans le dataset).
+        df.shape[1] correspond au nombre de colonnes (nombre de variables).
+        La fonction print() affiche le message avec le nombre de véhicules en utilisant une f-string (f""), qui permet d'insérer des variables dans une chaîne de caractères de manière plus lisible.
+        Alternatives:
+        print("Nombre total de véhicules dans le dataset :", len(df))
+    
+    . Afficher plus ou moins de lignes
+        Si tu veux voir plus ou moins de lignes, tu peux spécifier un nombre :
+        print(df.head(10))  # Affiche les 10 premières lignes
+        print(df.head(3))   # Affiche les 3 premières lignes
+            . Afficher les dernières lignes (df.tail())
+                print(df.tail())  # Affiche les 5 dernières lignes
+                print(df.tail(10))  # Affiche les 10 dernières lignes
+            . Afficher des lignes aléatoires (df.sample())
+                print(df.sample(5))  # Affiche 5 lignes prises au hasard
+
+    . print(df.describe())
+        affiche un résumé statistique des colonnes numériques du DataFrame df.
+            La méthode .describe() génère des statistiques basiques sur les colonnes numériques :
+                . count : nombre total de valeurs non nulles
+                . mean : moyenne
+                . std : écart-type
+                . min : valeur minimale
+                . 25% : premier quartile (Q1)
+                . 50% : médiane (Q2)
+                . 75% : troisième quartile (Q3)
+                . max : valeur maximale
+            Variantes et options
+                1️. Afficher les statistiques pour les colonnes catégorielles
+                    . Si tu veux voir les statistiques des colonnes non numériques :
+                        print(df.describe(include='object'))
+                2️. Afficher toutes les colonnes (numériques + catégorielles)
+                    - print(df.describe(include='all'))
+                        Cela affiche les statistiques pour toutes les colonnes, numériques et non numériques.
+                3️. Appliquer describe() à une seule colonne
+                    - print(df["age"].describe())
+                        Donne uniquement les statistiques pour la colonne age.
+                4️. Arrondir les valeurs pour plus de lisibilité
+                    - print(df.describe().round(2))
+                        Cela réduit le nombre de décimales affichées.
+
+    . plt.figure(figsize=(12, 5))
+        crée une nouvelle figure Matplotlib avec une taille personnalisée de 12 pouces de large et 5 pouces de haut.
+            . plt.figure() est utilisée pour créer une nouvelle figure avant de tracer un graphique.
+                figsize=(width, height) définit la taille de la figure en pouces.
+                - Exemples d'utilisation
+                1️. Modifier la taille d'un graphique
+                    import matplotlib.pyplot as plt
+                    import numpy as np
+                    x = np.linspace(0, 10, 100)
+                    y = np.sin(x)
+                    plt.figure(figsize=(12, 5))  # Définir une taille spécifique
+                    plt.plot(x, y, label="sin(x)")
+                    plt.legend()
+                    plt.title("Exemple de graphique")
+                    plt.show()
+                        Ici, le graphique occupe une large portion de l'écran, tout en étant pas trop haut.
+                2️. Gérer plusieurs figures
+                Si tu veux tracer plusieurs graphiques indépendants :
+                    plt.figure(figsize=(6, 4))
+                    plt.plot(x, y)
+                    plt.title("Graphique 1")
+                    plt.figure(figsize=(12, 5))
+                    plt.plot(x, np.cos(x))
+                    plt.title("Graphique 2")
+                    plt.show()
+                        Chaque plt.figure() crée une nouvelle figure, donc les tracés ne se mélangent pas.
+                3️. Utiliser figsize avec subplots()
+                Si tu veux plusieurs sous-graphiques, tu peux aussi définir la taille avec plt.subplots() :
+                    fig, axes = plt.subplots(1, 2, figsize=(12, 5))  # Deux graphiques côte à côte
+                    axes[0].plot(x, y)
+                    axes[0].set_title("sin(x)")
+                    axes[1].plot(x, np.cos(x))
+                    axes[1].set_title("cos(x)")
+                    plt.show()
+                        Ici, on crée deux sous-graphiques dans une seule figure.
+        
+        . sns.scatterplot(x=df["km"], y=df["price"], alpha=0.5)
+            utilise Seaborn pour tracer un nuage de points (scatter plot) où :
+                L'axe X représente la colonne "km" du DataFrame df (kilométrage des véhicules).
+                L'axe Y représente la colonne "price" du DataFrame df (prix des véhicules).
+                alpha=0.5 ajuste la transparence des points pour mieux visualiser les zones de forte densité.
+                sns.scatterplot(x, y) crée un nuage de points pour observer la relation entre deux variables.
+                alpha=0.5 réduit l'opacité des points (50% de transparence), utile pour éviter un chevauchement excessif.
+                Chaque point représente une observation individuelle (un véhicule dans ce cas).
+                    . Exemples et améliorations
+                        1️. Ajouter des axes et un titre
+                            Pour un affichage plus clair :
+                                import seaborn as sns
+                                import matplotlib.pyplot as plt
+                                plt.figure(figsize=(10, 6))  # Ajuster la taille du graphique
+                                sns.scatterplot(x=df["km"], y=df["price"], alpha=0.5)
+                                plt.xlabel("Kilométrage (km)")
+                                plt.ylabel("Prix (€)")
+                                plt.title("Relation entre le kilométrage et le prix des véhicules")
+                                plt.show()
+                        2️. Ajouter une couleur selon une variable catégorielle
+                            Si le dataset contient une colonne "fuel_type" (type de carburant), on peut colorer les points en fonction de cette variable :
+                                sns.scatterplot(x=df["km"], y=df["price"], hue=df["fuel_type"], alpha=0.5)
+                                hue=df["fuel_type"] colore les points selon le type de carburant (essence, diesel, électrique...).
+                        3️. Changer la taille des points selon une autre variable (size)
+                            Si df contient une colonne "power" (puissance du moteur), on peut ajuster la taille des points :
+                                sns.scatterplot(x=df["km"], y=df["price"], size=df["power"], alpha=0.5)
+                                   Les points plus gros représenteront des véhicules plus puissants.
+                        4️. Ajouter une régression avec sns.regplot()
+                            Si on veut visualiser une tendance dans les données :
+                                sns.regplot(x=df["km"], y=df["price"], scatter_kws={"alpha": 0.3}, line_kws={"color": "red"})
+                                scatter_kws={"alpha": 0.3} ajuste la transparence des points.
+                                line_kws={"color": "red"} colore la ligne de tendance en rouge.
+
+Dans un deuxième temps nous allons nettoyer et préparer les données
+
+    Avant d'entraîner notre modèle de régression linéaire, nous devons nous assurer que nos données sont:
+        1. Sans valeurs aberrantes (kilométrage et prix extrêmes qui pourraient fausser le modèle).
+            Les valeurs extrêmes peuvent perturber la régression linéaire, donc nous allons identifier:
+                . Les prix anormalement bas ou hauts
+                . Les kilométrages qui ne semblent pas réalistes
+                    Détection des valeurs abérrantes avec l'iQR (Interquartile Range):
+                        Q1 = df.quantile(0.25) # Premier quartile (25% des données sont inférieures à cette valeur)
+                        Q3 = df.quantile(0.75) # Troisième quartile (75%)
+                        IQR = Q3 - Q1 # Calcul de l'Interquartile Range
+                        #Définition des bornes pour les valeurs aberrantes
+                        lower_bound = Q1 - 1.5 * IQR
+                        upper_bound = Q3 + 1.5 * IQR
+                        # Vérification des valeurs extrêmes
+                        outliers = ((df < lower_bound) | (df > upper_bound)).sum()
+                        print("\nValeurs aberrantes détectées :")
+                        print(outliers)
+                            Si peu de valeurs aberrantes sont trouvées, nius pouvons les garder.
+                            Si trop de valeurs sont extrêmes, nous devrons filtrer les données.
+                                ( En statistique descriptive, l' écart interquartile (EIQ) est une mesure de la dispersion statistique , qui est la dispersion des données.
+                                L'EIQ peut également être appelé écart médian, 50 % médian, quatrième écart ou écart H.
+                                Il est défini comme la différence entre les 75e et 25e percentiles des données.
+                                Pour calculer l'EIQ, l'ensemble de données est divisé en quartiles, ou quatre parties paires ordonnées par interpolation linéaire.
+                                Ces quartiles sont désignés par Q1 (également appelé quartile inférieur), Q2 (médiane) et Q3 (également appelé quartile supérieur).
+                                Le quartile inférieur correspond au 25e percentile et le quartile supérieur correspond au 75e percentile, donc EIQ = Q3 − Q1.
+                                L'IQR est un exemple d' estimateur tronqué, défini comme la plage tronquée de 25 %, qui améliore la précision des statistiques des ensembles de données en supprimant les points aberrants à faible contribution.
+                                Il est également utilisé comme une mesure d'échelle robuste, il peut être clairement visualisé par la boîte sur un diagramme en boîte .)
+                                    - Détail calcul mathématique:
+                                       . Position de Q1 : Q1 = 25/100 x (n + 1) (n nombre de paramètres)
+                                       . Position de Q3 : Q3 = 75/100 x (n + 1)
+                                       . Si position entière prendre la valeur exacte
+                                       . Si position décimale, faire interpolation linéaire: Q1 ou Q3 = Valeur inf + (décimale x (Valeur sup - Valeur inf))
+
+        2. Sans valeurs manquantes (lignes vides ou incomplètes).
+            print("Vérification des valeurs manquantes:)
+            print(df.isnull().sum()) # compte le nombre de valeurs manquantes par colonne
+                Si tout est à zéro, nous n'avons pas de valeurs manquantes
+
+        3. Filtrage des données
+            Si nous trouvons d trop de valeur aberrantes, nous pourrons les supprimer:
+                df_cleaned = df[(df["km"] >= lower_bound["km"]) & (df["km"] <= upper_bound["km"]) & (df["price"] >= lower_bound["price"]) & (df["price"] <= upper_bound["price"])]
+                print(f"\n Nombre de véhicules après suppression des valeurs aberrantes : {df_cleaned.shape[0]}")
+
+                - Normalisation des données
+                 La normalisation est importante car:
+                    1. Les échelles des données sont différentes (ex: le kilométrage est en milliers, le prix en centaines ou miliers d'euros)
+                    2. La descente de gradient fonctionne mieux avec des valeurs centrées et réduites, car sinon les mises à jour des poids peuvent être très lentes ou instalbes.
+                      Implémentation de la Normalisation
+                        Xnorm = (X - Xmin)/(Xmax - Xmin)
+                            . X valeur originale (km ou prix)
+                            . X_min plus petite valeur de la colonne
+                            . X_max plus grande valeur de la colonne
+                            . X_norm valeur normalisée
+
+Implémentation de la fonction coût
+    1. Pourquoi la fonction coût?
+        Objectif de la régression linéaire:
+         . Nous voulons prédire le prix  d'une voiture en fonction de son kilométrage
+         . Notre modèle est une fonction linéaire de la forme:
+            h_Θ(x) = 0₀ + 0₁_x
+            où:
+                . 0₀(biais) est l'ordonnée à l'originale
+                . 0₁(poids) est le coefficient directeur
+                . x est le kilométrage normalisée
+                . h_Θ(x) est le pris prédit
+                    . Tous les 0₀ et 0₁ possibles ne donnent pas une bonne prédiction.
+                    . Nous devons évaluer la qualité d'un modèle.
+                    . La fonction de coût mesure l'erreur entre les prédictions et les vraies valeurs.
+                    . elle guide la descente de gradient pour trouver les meilleurs 0.
+        
+    2. Formule Mathématique de la fonction de coût
+        J_(0₀,0₁) = (1/2m)∑^m _i=1 (h_θ(x_i) - y_i)²
+            Définition des termes:
+                . J(0) erreur moyenne quadratique (Mean Squared Error - MSE)
+                . m Nombre total d'exemples (voitures)
+                . h_θ(x_i) Prix prédit par notre modèle pour un kilométrage x_i
+                . y_i Prix réel de la voiture
+                . (h_θ(x_i) - y_i)² Erreur quadratique pour chaque voiture
+                . 1/(2m) facteur de normalisation pour éviter que la dérivée ne soit trop grande
+    
+    3. Explication Intuitive de la fonction de coût
+        . Si on faisait juste l'erreur absolue (h_θ(x_i) - y_i), certaines erreurs négatives pourraient annuler les erreurs positives.
+        . L'erreur quadratique s'assure que toutes les erreurs sont positives.
+        . Cela donne plus d'importance aux grandes erreurs(car une erreur de 10 sera plus pénalisée qu'une erreur de 1).
+        Pourquoi diviser par 2m ?
+            . La somme des erreurs peut devenir grande si on a beaucoup de voitures.
+            . On normalise en divisant par m.
+            . Le facteur 1/2 simplifie les calculs quand on dérrive la fonction de coût pour la descente de gradient.
+
+    4. def compute_cost(theta_0, theta_1, X, y):
+        . theta_0 : biais du modèle (valeur de h_θ(x) quand x = 0)
+        . theta_1 : poids du kilométrage (impact kilométrage sur le prix)
+        . X : les valeurs du kilométrage normalisée
+        . y : les valeurs réelles des prix normalisés
+            L'objectif est de clculer la fonction coût:
+                J_(0₀,0₁) = (1/2m)∑^m _i=1 (h_θ(x_i) - y_i)²
+                    Elle retourne un nombre qui représente l'erreur du modèle.
+        - calcul des prédictions
+            predictions = theta_0 + theta_1 * x
+            formule: h_θ(x) = 0₀ + 0₁ * x
+                . Elle prend chaque valeur de X (kilométrage normalisé)
+                . Elle calcule le prix prédit en appliquant l'équation de la droite.
+                . Le résultat est un vecteur numpy contenant les prédictions pour chaque voiture.
+        - Calcul des erreurs
+            errors = predictions - Y
+                . Nous voulons comparer les prédictions aux prix réels.
+                . L'erreur correspond à la différence entre les prédictions et les vrais prix.
+            Exemple: 
+                theta_0 = 0.5
+                theta_1 = 0.5
+                X = [0.2, 0.5, 0.8]
+                Alors:
+                predictions = 0.5 + 0.5 * [0.2, 0.5, 0.8]
+                    predictions=[0.5+0.1,0.5+0.25,0.5+0.4]=[0.6,0.75,0.9]
+                errors = predictions - y
+                    y = [0.275, 0.724, 0.931]
+                    errors=[0.6−0.275,0.75−0.724,0.9−0.931]=[0.325,0.026,−0.031]
+                    . Une erreur positive siginfie que notre modèle surestime le prix
+                    . Une erreur négative signifie qu'il sous-estime le prix
+        - Calcul de la fonction coût
+            cost = (1 / (2 * m)) * np.sum(errors ** 2)
+                Pourquoi élever au carré ?
+                    . Les erreurs positives et négatives ne doivent pas s'annuler
+                    . L'erreur quadratique punit plus fortement les grosses erreurs
+                Pourquoi 1/(2m) ?
+                    . Diviser par m permet d'avoir une erreur moyenne
+                    . Multiplier par 1/2 simplifie les calculs pour la descente de gradient
+                    Exemple : 
+                        errors=[0.325,0.026,−0.031]
+                            errors² =[0.1056,0.00067,0.00096]
+                                ∑errors² = 0.1072
+                                    cost = 1/(2x3) x 0.1072 = 0.1072/6 = 0.0179
+                                        Le coût obtenu représente l'erreur moyenne du modèle.
+        - Maintenant que nous avons mis en place la fonction de coût
+            . Nous devons déterminer les meilleures valeurs de 0₀ et 0₁ pour minimiser J(0) en ajustant 0₀ et 0₁
+            . Nous revenons aux formules du sujet dans lesquelles nous déterminons des valeurs temporaires:
+                tmpθ₀ = learningRate × (1 / m) ∑ᵐ⁻¹ᵢ=₀ (estimatePrice(mileage[i]) − price[i])
+                tmpθ₁ = learningRate × (1 / m) ∑ᵐ⁻¹ᵢ=₀ (estimatePrice(mileage[i]) − price[i]) x mileage[i]
+                    En mathématique ces valeurs temporaires sont sous forme de dérivées
+
+
+
+
+
