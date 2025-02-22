@@ -1,5 +1,5 @@
 # Ignorer l'environnement virtuel
-ftline/
+ftlinear/
 
 # Ignorer les fichiers de cache Python
 __pycache__/

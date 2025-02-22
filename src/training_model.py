@@ -17,13 +17,13 @@ def train_model():
     theta_0_init = 0
     theta_1_init = 1
     learning_rate = 0.1 # Taux d'apprentissage
-    iterations = 10000
+    iterations = 1000
 
     # Exécuter la descente de gradient
     theta_0_opt, theta_1_opt, cost_history = gradient_descent(X, y, theta_0_init, theta_1_init, learning_rate, iterations)
 
     # Sauvegarder les paramètres optimisés
-    np.save("model.npy", [theta_0_opt, theta_1_opt]) # Sauvegarde des paramètres optimisés dans un fichier .npy
+    np.save("data/model.npy", [theta_0_opt, theta_1_opt]) # Sauvegarde des paramètres optimisés dans un fichier .npy
     print("Modèle entraîné et paramètres sauvegardés.")
     print(f"Paramètre optimisé θ₀ = {theta_0_opt}")
     print(f"Paramètre optimisé θ₁ = {theta_1_opt}")
