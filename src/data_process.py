@@ -13,6 +13,7 @@ def load_and_process_data(file_path):
     df["km_norm"] = (df["km"] - km_min) / (km_max - km_min)
     df["price_norm"] = (df["price"] - price_min) / (price_max - price_min)
     
+    print("Normalisation en cours...")
     df.to_csv("data/data_normalized.csv", index=False)
     print("Données nettoyées et normalisées suvegardées dans 'data/data_normalized.csv' !")
     plot_raw_data(df) # Affichage des données normalisées 

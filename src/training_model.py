@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
-from src.data_process import load_and_process_data
-from src.gradient_descent import gradient_descent
-from src.visualization import plot_cost_history, plot_regression_line
+from data_process import load_and_process_data
+from gradient_descent import gradient_descent
+from visualization import plot_cost_history, plot_regression_line
 
 def train_model():
     """

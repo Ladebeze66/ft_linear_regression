@@ -1,5 +1,5 @@
 import numpy as np
-from src.cost_function import compute_cost
+from cost_function import compute_cost
 
 def gradient_descent(X, y, theta_0, theta_1, learning_rate, iterations):
     """Applique la descente de gradient et retourne les paramètres optimisés."""
