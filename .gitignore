@@ -1,6 +1,6 @@
 # Ignorer l'environnement virtuel
 venv/
-.ftline/
+ftline/
 
 # Ignorer les fichiers de cache Python
 __pycache__/
