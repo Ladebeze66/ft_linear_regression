@@ -5,7 +5,7 @@ import os
 sys.path.append(os.path.abspath("src"))
 
 from src.training_model import train_model
-from src.gui import show_gui  # Import propre et structuré
+from src.gui import cli_interface  # Nouvelle importation
 
 def main():
     print("Bienvenue dans le modèle de prédiction de prix de voiture !")
@@ -17,7 +17,7 @@ def main():
     from src.prediction import predict_price
     # Lancer l'interface graphique après l'entraînement
     print("Lancement de l'interface graphique...")
-    show_gui(predict_price)
+    cli_interface(predict_price)
 
 if __name__ == "__main__":
     main()
